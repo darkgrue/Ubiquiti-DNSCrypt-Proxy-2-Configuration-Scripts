@@ -1,0 +1,1 @@
+Get the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases) and extract to this directory.
