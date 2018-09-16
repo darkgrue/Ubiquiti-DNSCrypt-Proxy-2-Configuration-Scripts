@@ -5,9 +5,11 @@ To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed, get t
 A few support scripts are required:
 
 **/config/scripts/post-config.d/dnscrypt.sh**
+
 This sets up a persistent directory in the `/config` filesystem for dnsmasq to save the timestamp created by the dnssec-timestamp option, and then starts the dnscrypt-proxy process.
 
 **/config/scripts/post-config.d/dnt-hup.sh**
+
 This uses ntp's `ntp-wait` Perl script to HUP dnsmasq when ntp is in a synchronized state (which is useful if the `dnssec-no-timecheck` option is used for dnsmasq). The ntp-wait command can take quite a while to complete - I clocked it at about 19 minutes on a sample boot - which is why it's forced into the background, otherwise the boot process would block here.
 
 # Device Configuration
@@ -59,6 +61,8 @@ After the files are placed in the `/config` filesystem on the USG, the JSON conf
 Pay attention to the sites directory name, but if you're using the default site, the path below should be correct. Also note the configuration below adds in the configuration stanza for the UPNP service to allow mutiple XBoxes to connect to XBox Live without fighting over Port 3074, as they're prone to. It's not at all necessary for DNSCRYPT to work, but it's handy to have if you have an XBox.
 
 **/srv/unifi/data/sites/default/config.gateway.json**
+
+This is a JSON fragment to set the necessary parameters on the USG when it's provisioned. It may need to be edited for your environment (e.g. IP addresses).
 
 Once the `config.gateway.json` file is on the CloudKey in the correct directory, force the USG to reprovision, and you should be good to go.
 
