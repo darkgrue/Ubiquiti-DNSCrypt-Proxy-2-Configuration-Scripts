@@ -1,6 +1,6 @@
 # Start
 
-To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed, get the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary comes with some sample configuration files. At a minimum, example-dnscrypt-proxy.toml needs to be renamed to dnscrypt-proxy.toml. By default, the binary expects the configuration files to be in the same directory; I chose to put the binary and the associated config files in the /config/sbin/dnscrypt-proxy directory.
+To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed. GGet the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary comes with some sample configuration files. At a minimum, example-dnscrypt-proxy.toml needs to be renamed to dnscrypt-proxy.toml. By default, the binary expects the configuration files to be in the same directory; I chose to put the binary and the associated config files in the `/config/sbin/dnscrypt-proxy` directory.
 
 A few support scripts are required:
 
@@ -68,7 +68,7 @@ Once the `config.gateway.json` file is on the CloudKey in the correct directory,
 
 # Finishing Up
 
-Checking on the EdgeRouter/USG, you should see the `dnscrypt-proxy` process running when you perform a listing of running processes with the `ps -ef` command, and you should see diagnostic messages from the scripts and the `dnscrypt-proxy` process itself in the `/var/log/messages` log file:
+Checking on the EdgeRouter/USG, you should see the `dnscrypt-proxy` process running when you perform a listing of running processes with the `ps -ef` command, and you should see diagnostic messages from the scripts and the `dnscrypt-proxy` process itself in the `/var/log/messages` log file (sample output from a USG is shown below):
  
 ```
 Aug  3 02:41:00 USG dnscrypt-proxy[3514]: Source [public-resolvers.md] loaded
