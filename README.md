@@ -1,6 +1,6 @@
 # Start
 
-To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed. GGet the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary comes with some sample configuration files. At a minimum, example-dnscrypt-proxy.toml needs to be renamed to dnscrypt-proxy.toml. By default, the binary expects the configuration files to be in the same directory; I chose to put the binary and the associated config files in the `/config/sbin/dnscrypt-proxy` directory.
+To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed. GGet the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary comes with some sample configuration files. Configuration of dnscrypt-proxy requires that at a minimum `example-dnscrypt-proxy.toml` needs to be renamed to `dnscrypt-proxy.toml` (a suitable configuration file is provided here). By default, the binary expects the configuration files to be in the same directory by default; I chose to put the binary and the associated config files in the `/config/sbin/dnscrypt-proxy` directory.
 
 A few support scripts are required:
 
@@ -10,13 +10,13 @@ This sets up a persistent directory in the `/config` filesystem for dnsmasq to s
 
 **/config/scripts/post-config.d/dnt-hup.sh**
 
-This uses ntp's `ntp-wait` Perl script to HUP dnsmasq when ntp is in a synchronized state (which is useful if the `dnssec-no-timecheck` option is used for dnsmasq). The ntp-wait command can take quite a while to complete - I clocked it at about 19 minutes on a sample boot - which is why it's forced into the background, otherwise the boot process would block here.
+This uses ntp's `ntp-wait` Perl script to HUP dnsmasq when ntp is in a synchronized state (which is useful if the `dnssec-no-timecheck` option is used for dnsmasq). The `ntp-wait` command can take quite a while to complete - I clocked it at about 19 minutes on a sample boot - which is why it's forced into the background, otherwise the boot process would block here.
 
 # Device Configuration
 
 ## Edgerouter Configuration
 
-After the files are placed in the `/config` filesystem, perform the router configuration, including the dnsmasq configuration (note the delete command that's discussed in this thread to make sure there isn't a server=127.0.0.1 line in `/etc/dnsmasq.conf` that overrides pointing to the dnscrypt-proxy server we have running on an unprivledged port):
+After the files are placed in the `/config` filesystem, perform the router configuration, including the dnsmasq configuration (note the delete command that's discussed in this thread to make sure there isn't a `server=127.0.0.1` line in `/etc/dnsmasq.conf` that overrides pointing to the dnscrypt-proxy server we have running on an unprivledged port):
 
 ```
 configure
@@ -58,7 +58,7 @@ save
 
 After the files are placed in the `/config` filesystem on the USG, the JSON configuration file needs to be put on the CloudKey. Although, like on the Edgerouter, the `/config` filesystem is protected against reboots and firware updates, the USG configuration made directly on the USG won't persist when reprovisioned by the CloudKey. So we need to use the [USG Advanced Configuration](https://help.ubnt.com/hc/en-us/articles/215458888-UniFi-USG-Advanced-Configuration) feature to make the configuration changes we would have made on the Edgerouter command-line.
 
-Pay attention to the sites directory name, but if you're using the default site, the path below should be correct. Also note the configuration below adds in the configuration stanza for the UPNP service to allow mutiple XBoxes to connect to XBox Live without fighting over Port 3074, as they're prone to. It's not at all necessary for DNSCRYPT to work, but it's handy to have if you have an XBox.
+Pay attention to the sites directory name, but if you're using the default site, the path below should be correct. Also note the configuration below adds in the configuration stanza for the UPNP service to allow mutiple XBoxes to connect to XBox Live without fighting over Port 3074, as they're prone to. It's not at all necessary for DNSCRYPT to work and can be left out, but it's handy to have if you have an XBox.
 
 **/srv/unifi/data/sites/default/config.gateway.json**
 
