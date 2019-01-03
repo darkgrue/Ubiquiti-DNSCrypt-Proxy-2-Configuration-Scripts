@@ -41,7 +41,7 @@ Choose one of the following configuration options (`dnssec-timestamp` **or** `dn
 set service dns forwarding options dnssec-timestamp=/config/var/run/dnsmasq/dnsmasq.time
 ```
 
-**OR**
+**OR** if you are using the `/config/scripts/post-config.d/dnt-hup.sh` script (recommended)
 
 ```
 set service dns forwarding options dnssec-no-timecheck
