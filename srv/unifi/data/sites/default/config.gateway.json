@@ -2,9 +2,6 @@
         "service": {
                 "dns": {
                         "forwarding": {
-                                "except-interface": [
-                                        "eth0"
-                                ],
                                 "options": [
                                         "domain-needed",
                                         "bogus-priv",
