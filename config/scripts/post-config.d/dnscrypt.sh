@@ -9,4 +9,6 @@ fi;
 /config/sbin/dnscrypt-proxy/dnscrypt-proxy -service install
 /config/sbin/dnscrypt-proxy/dnscrypt-proxy -service start
 
+(config/sbin/dnscrypt-proxy/dnscrypt-watchdog.sh) &
+
 exit 0
