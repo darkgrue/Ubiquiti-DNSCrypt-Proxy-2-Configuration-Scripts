@@ -28,7 +28,7 @@ set service dns forwarding options domain-needed
 set service dns forwarding options bogus-priv
 set service dns forwarding options except-interface=eth1
 set service dns forwarding options stop-dns-rebind
-set service dns forwarding options 'server=127.0.0.1#5353'
+set service dns forwarding options 'server=127.0.0.1#6878'
 set service dns forwarding options trust-anchor=.,20326,8,2,E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 set service dns forwarding options dnssec
 set service dns forwarding options dnssec-check-unsigned
