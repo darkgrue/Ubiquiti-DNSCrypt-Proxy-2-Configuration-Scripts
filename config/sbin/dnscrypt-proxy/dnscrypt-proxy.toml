@@ -75,7 +75,7 @@ require_dnssec = true
 # Server must not log user queries (declarative)
 require_nolog = true
 
-# Server must not enforce its own blocklist (for parental control, ads blocking...)
+# Server must not enforce its own blacklist (for parental control, ads blocking...)
 require_nofilter = true
 
 # Server names to avoid even if they match all criteria
@@ -210,7 +210,7 @@ cert_refresh_delay = 240
 ##
 ## If more than one resolver is specified, they will be tried in sequence.
 
-fallback_resolvers = ['9.9.9.9:53', '8.8.8.8:53']
+fallback_resolvers = ['1.1.1.1:53']
 
 
 ## Always use the fallback resolver before the system DNS settings.
@@ -275,7 +275,7 @@ log_files_max_backups = 1
 
 ## Note: if you are using dnsmasq, disable the `dnssec` option in dnsmasq if you
 ## configure dnscrypt-proxy to do any kind of filtering (including the filters
-## below and blocklists).
+## below and blacklists).
 ## You can still choose resolvers that do DNSSEC validation.
 
 
@@ -298,7 +298,7 @@ block_undelegated = true
 
 
 ## TTL for synthetic responses sent when a request has been blocked (due to
-## IPv6 or blocklists).
+## IPv6 or blacklists).
 
 reject_ttl = 600
 
@@ -406,7 +406,7 @@ cache_neg_max_ttl = 600
 [query_log]
 
   ## Path to the query log file (absolute, or relative to the same directory as the config file)
-  ## Can be set to /dev/stdout in order to log to the standard output.
+  ## On non-Windows systems, can be /dev/stdout to log to the standard output (also set log_files_max_size to 0)
 
   # file = 'query.log'
 
@@ -444,10 +444,10 @@ cache_neg_max_ttl = 600
 
 
 ######################################################
-#        Pattern-based blocking (blocklists)        #
+#        Pattern-based blocking (blacklists)        #
 ######################################################
 
-## Blocklists are made of one pattern per line. Example of valid patterns:
+## Blacklists are made of one pattern per line. Example of valid patterns:
 ##
 ##   example.com
 ##   =example.com
@@ -456,20 +456,20 @@ cache_neg_max_ttl = 600
 ##   ads*.example.*
 ##   ads*.example[0-9]*.com
 ##
-## Example blocklist files can be found at https://download.dnscrypt.info/blocklists/
-## A script to build blocklists from public feeds can be found in the
-## `utils/generate-domains-blocklists` directory of the dnscrypt-proxy source code.
+## Example blacklist files can be found at https://download.dnscrypt.info/blacklists/
+## A script to build blacklists from public feeds can be found in the
+## `utils/generate-domains-blacklists` directory of the dnscrypt-proxy source code.
 
-[blocked_names]
+[blacklist]
 
   ## Path to the file of blocking rules (absolute, or relative to the same directory as the config file)
 
-  # blocked_names_file = 'blocked-names.txt'
+  # blacklist_file = 'blacklist.txt'
 
 
   ## Optional path to a file logging blocked queries
 
-  # log_file = 'blocked-names.log'
+  # log_file = 'blocked.log'
 
 
   ## Optional log format: tsv or ltsv (default: tsv)
@@ -479,25 +479,25 @@ cache_neg_max_ttl = 600
 
 
 ###########################################################
-#        Pattern-based IP blocking (IP blocklists)        #
+#        Pattern-based IP blocking (IP blacklists)        #
 ###########################################################
 
-## IP blocklists are made of one pattern per line. Example of valid patterns:
+## IP blacklists are made of one pattern per line. Example of valid patterns:
 ##
 ##   127.*
 ##   fe80:abcd:*
 ##   192.168.1.4
 
-[blocked_ips]
+[ip_blacklist]
 
   ## Path to the file of blocking rules (absolute, or relative to the same directory as the config file)
 
-  # blocked_ips_file = 'blocked-ips.txt'
+  # blacklist_file = 'ip-blacklist.txt'
 
 
   ## Optional path to a file logging blocked queries
 
-  # log_file = 'blocked-ips.log'
+  # log_file = 'ip-blocked.log'
 
 
   ## Optional log format: tsv or ltsv (default: tsv)
@@ -507,25 +507,25 @@ cache_neg_max_ttl = 600
 
 
 ######################################################
-#   Pattern-based allow lists (blocklists bypass)   #
+#   Pattern-based whitelisting (blacklists bypass)   #
 ######################################################
 
-## Allowlists support the same patterns as blocklists
-## If a name matches an allowlist entry, the corresponding session
+## Whitelists support the same patterns as blacklists
+## If a name matches a whitelist entry, the corresponding session
 ## will bypass names and IP filters.
 ##
 ## Time-based rules are also supported to make some websites only accessible at specific times of the day.
 
-[allowed_names]
+[whitelist]
 
-  ## Path to the file of allow list rules (absolute, or relative to the same directory as the config file)
+  ## Path to the file of whitelisting rules (absolute, or relative to the same directory as the config file)
 
-  # allowed_names_file = 'allowed-names.txt'
+  # whitelist_file = 'whitelist.txt'
 
 
-  ## Optional path to a file logging allowed queries
+  ## Optional path to a file logging whitelisted queries
 
-  # log_file = 'allowed-names.log'
+  # log_file = 'whitelisted.log'
 
 
   ## Optional log format: tsv or ltsv (default: tsv)
@@ -539,10 +539,10 @@ cache_neg_max_ttl = 600
 ##########################################
 
 ## One or more weekly schedules can be defined here.
-## Patterns in the name-based blocked_names file can optionally be followed with @schedule_name
+## Patterns in the name-based blocklist can optionally be followed with @schedule_name
 ## to apply the pattern 'schedule_name' only when it matches a time range of that schedule.
 ##
-## For example, the following rule in a blocklist file:
+## For example, the following rule in a blacklist file:
 ## *.youtube.* @time-to-sleep
 ## would block access to YouTube during the times defined by the 'time-to-sleep' schedule.
 ##
@@ -641,7 +641,7 @@ cache_neg_max_ttl = 600
 # The list below enables workarounds to make non-relayed usage more reliable
 # until the servers are fixed.
 
-fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familyshield-ipv6', 'quad9-dnscrypt-ip4-filter-pri', 'quad9-dnscrypt-ip4-nofilter-pri', 'quad9-dnscrypt-ip6-filter-pri', 'quad9-dnscrypt-ip6-nofilter-pri', 'cleanbrowsing-adult', 'cleanbrowsing-family-ipv6', 'cleanbrowsing-family', 'cleanbrowsing-security']
+fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familyshield-ipv6', 'quad9-dnscrypt-ip4-filter-alt', 'quad9-dnscrypt-ip4-filter-pri', 'quad9-dnscrypt-ip4-nofilter-alt', 'quad9-dnscrypt-ip4-nofilter-pri', 'quad9-dnscrypt-ip6-filter-alt', 'quad9-dnscrypt-ip6-filter-pri', 'quad9-dnscrypt-ip6-nofilter-alt', 'quad9-dnscrypt-ip6-nofilter-pri', 'cleanbrowsing-adult', 'cleanbrowsing-family-ipv6', 'cleanbrowsing-family', 'cleanbrowsing-security']
 
 
 
@@ -698,16 +698,9 @@ fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familys
 # ]
 
 
-# Skip resolvers incompatible with anonymization instead of using them directly
+# skip resolvers incompatible with anonymization instead of using them directly
 
 skip_incompatible = false
-
-
-# If public server certificates for a non-conformant server cannot be
-# retrieved via a relay, try getting them directly. Actual queries
-# will then always go through relays.
-
-# direct_cert_fallback = false
 
 
 
@@ -754,4 +747,4 @@ skip_incompatible = false
 [static]
 
   # [static.'myserver']
-  # stamp = 'sdns://AQcAAAAAAAAAAAAQMi5kbnNjcnlwdC1jZXJ0Lg'
+  # stamp = 'sdns:AQcAAAAAAAAAAAAQMi5kbnNjcnlwdC1jZXJ0Lg'
