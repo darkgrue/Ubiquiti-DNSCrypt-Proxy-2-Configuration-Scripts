@@ -14,7 +14,30 @@ This uses ntp's `ntp-wait` Perl script to HUP dnsmasq when ntp is in a synchroni
 
 # Device Configuration
 
-## Edgerouter Configuration
+Follow the instructions for the EdgeRouter or UniFi configuration, below.
+
+**IMPORTANT NOTE:** The latest release of USG Firmware (4.4.55) removed support for DNSSEC in dnsmasq (thank you, @laszlojau):
+
+> dnsmasq deprecated the crypto library currently used by USG for DNSSEC purposes. This does not impact any controller-generated configuration, and is all but unused on USG in general, but if you have DNSSEC enabled in config.gateway.json, you will need to remove that and force provision USG.
+
+You can verify this by checking the compile options for dnsmasq:
+
+```
+dnsmasq -v | grep -Eo no-DNSSEC
+no-DNSSEC
+```
+
+If the `no-DNSSEC` option is present, you need to remove the following commands from the `config.gateway.json` file on the CloudKey and reprovision:
+
+```
+proxy-dnssec
+trust-anchor=.,20326,8,2,E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
+dnssec
+dnssec-check-unsigned
+dnssec-no-timecheck
+```
+
+## EdgeRouter Configuration
 
 After the files are placed in the `/config` filesystem, perform the router configuration, including the dnsmasq configuration (note the delete command that's discussed in this thread to make sure there isn't a `server=127.0.0.1` line in `/etc/dnsmasq.conf` that overrides pointing to the dnscrypt-proxy server we have running on an unprivledged port):
 
