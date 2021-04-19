@@ -20,10 +20,10 @@ Follow the instructions for the EdgeRouter or UniFi configuration, below.
 
 > dnsmasq deprecated the crypto library currently used by USG for DNSSEC purposes. This does not impact any controller-generated configuration, and is all but unused on USG in general, but if you have DNSSEC enabled in config.gateway.json, you will need to remove that and force provision USG.
 
-You can verify this by checking the compile options for dnsmasq:
+You can verify this by checking the compile options for dnsmasq on the USG:
 
 ```
-dnsmasq -v | grep -Eo no-DNSSEC
+/usr/sbin/dnsmasq -v | grep -Eo no-DNSSEC
 no-DNSSEC
 ```
 
