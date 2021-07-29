@@ -3,14 +3,17 @@
 RESET_WHEN_FAIL_COUNT=5
 SLEEP_INTERVAL=10s
 
-/usr/bin/logger -p user.notice Starting dnscrypt-proxy watchdog...
+/usr/bin/logger -p user.notice dnscrypt-watchdog: Starting...
+/usr/bin/logger -p user.notice dnscrypt-watchdog: Sleeping for 3 minutes to wait for dnscrypt-proxy to ready up...
+sleep 3m
+/usr/bin/logger -p user.notice dnscrypt-watchdog: Ready.
 
 fail_count=0
 while true; do
     # Check if dnscrypt-proxy is running.
     if pgrep -F /var/run/dnscrypt-proxy.pid > /dev/null
     then
-#        /usr/bin/logger -p user.notice dnscrypt process OK, checking resolver...
+#        /usr/bin/logger -p user.notice dnscrypt-watchdog: dnscrypt-proxy process is OK, checking resolver...
         host 9.9.9.9 > /dev/null
         if [ $? -ne 0 ]
         then
@@ -30,19 +33,19 @@ while true; do
                 fail_count=0
             fi
         else
-#            /usr/bin/logger -p user.notice resolver OK...
+#            /usr/bin/logger -p user.notice dnscrypt-watchdog: Resolver is OK.
             fail_count=0
         fi
     else
-        /usr/bin/logger -p user.notice dnscrypt-proxy process DOA, restarting...
+        /usr/bin/logger -p user.notice dnscrypt-watchdog WARNING: dnscrypt-proxy process DOA, restarting...
         /config/sbin/dnscrypt-proxy/dnscrypt-proxy -service start
 
-        /usr/bin/logger -p user.notice Sending SIGHUP to dnsmasq...
+        /usr/bin/logger -p user.notice dnscrypt-watchdog Sending SIGHUP to dnsmasq...
         /usr/bin/pkill -SIGHUP -e -F /var/run/dnsmasq/dnsmasq.pid 2>&1 | logger -p user.notice
 
         fail_count=0
     fi
 
-#    /usr/bin/logger -p user.notice dnscrypt-proxy watchdog sleeping for ${SLEEP_INTERVAL}...
+#    /usr/bin/logger -p user.notice dnscrypt-watchdog: Sleeping for ${SLEEP_INTERVAL}...
     sleep ${SLEEP_INTERVAL}
 done

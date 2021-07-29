@@ -3,14 +3,10 @@
                 "dns": {
                         "forwarding": {
                                 "options": [
-                                        "domain-needed",
                                         "bogus-priv",
                                         "stop-dns-rebind",
-                                        "server=127.0.0.1#6878",
-                                        "trust-anchor=.,20326,8,2,E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D",
-                                        "dnssec",
-                                        "dnssec-no-timecheck",
-										"no-resolv"
+										"no-resolv",
+                                        "server=127.0.0.1#6878"
                                 ]
                         }
                 },
