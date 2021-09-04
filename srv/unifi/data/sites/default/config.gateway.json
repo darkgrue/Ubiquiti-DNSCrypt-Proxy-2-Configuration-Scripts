@@ -2,15 +2,20 @@
         "service": {
                 "dns": {
                         "forwarding": {
+                                "cache-size": "0",
+                                "except-interface": [
+                                        "eth0"
+                                ],
                                 "options": [
-                                        "bogus-priv",
-                                        "stop-dns-rebind",
+                                        "server=127.0.0.1#5353",
+										"proxy-dnssec",
 										"no-resolv",
-                                        "server=127.0.0.1#6878"
+                                        "stop-dns-rebind",
+                                        "bogus-priv"
                                 ]
                         }
                 },
-		        "upnp2": {
+                "upnp2": {
                         "acl": {
                                 "rule": {
                                         "10": {
