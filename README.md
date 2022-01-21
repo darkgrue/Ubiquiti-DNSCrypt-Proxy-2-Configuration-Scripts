@@ -1,6 +1,6 @@
 # Start
 
-To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed. Get the Linux MIPS64 binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary comes with some sample configuration files. Configuration of dnscrypt-proxy requires that at a minimum `example-dnscrypt-proxy.toml` needs to be renamed to `dnscrypt-proxy.toml` (a suitable configuration file is provided here). By default, the binary expects the configuration files to be in the same directory by default; I chose to put the binary and the associated config files in the `/config/sbin/dnscrypt-proxy` directory.
+To get started, first and foremost, the DNSCrypt-Proxy 2 binary is needed. Get the appropriate Linux binary from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases). The binary needs to match the architecture of your Ubiquiti device (e.g. the USG is `linux_mips64` and the ER-X is `linux_mipsle`). The binary comes with some sample configuration files. Configuration of dnscrypt-proxy requires that at a minimum `example-dnscrypt-proxy.toml` needs to be renamed to `dnscrypt-proxy.toml` (a suitable configuration file is provided here). By default, the binary expects the configuration files to be in the same directory by default; I chose to put the binary and the associated config files in the `/config/sbin/dnscrypt-proxy` directory.
 
 A few support scripts are required:
 
