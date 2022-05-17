@@ -53,7 +53,7 @@ set service dns forwarding options domain-needed
 set service dns forwarding options bogus-priv
 set service dns forwarding options except-interface=eth1
 set service dns forwarding options stop-dns-rebind
-set service dns forwarding options 'server=127.0.0.1#5353'
+set service dns forwarding options 'server=127.0.0.1#6878'
 set service dns forwarding options trust-anchor=.,20326,8,2,E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 set service dns forwarding options dnssec
 set service dns forwarding options dnssec-check-unsigned
@@ -105,8 +105,8 @@ Aug  3 02:41:00 USG dnscrypt-proxy[3519]: dnscrypt-proxy 2.0.16
 Aug  3 02:41:00 USG dnscrypt-proxy[3519]: Service started
 Aug  3 02:41:00 USG dnscrypt-proxy[3530]: Source [public-resolvers.md] loaded
 Aug  3 02:41:00 USG dnscrypt-proxy[3530]: dnscrypt-proxy 2.0.16
-Aug  3 02:41:00 USG dnscrypt-proxy[3530]: Now listening to 127.0.0.1:5353 [UDP]
-Aug  3 02:41:00 USG dnscrypt-proxy[3530]: Now listening to 127.0.0.1:5353 [TCP]
+Aug  3 02:41:00 USG dnscrypt-proxy[3530]: Now listening to 127.0.0.1:6878 [UDP]
+Aug  3 02:41:00 USG dnscrypt-proxy[3530]: Now listening to 127.0.0.1:6878 [TCP]
 Aug  3 02:41:00 USG logger: Waiting for ntpdate to synchronize time from 0.ubnt.
 pool.ntp.org...
 Aug  3 02:41:00 USG logger: Waiting for ntpd to synchronize...
