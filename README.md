@@ -29,7 +29,7 @@ You can verify this by checking the compile options for dnsmasq on the USG:
 no-DNSSEC
 ```
 
-If the `no-DNSSEC` option is present, you need to remove the following commands from the `config.gateway.json` file on the CloudKey and reprovision:
+If the `no-DNSSEC` option is present, you need to remove `/config/scripts/post-config.d/dnt-hup.sh` as well as the following commands from the `config.gateway.json` file on the CloudKey and reprovision:
 
 ```sh
 proxy-dnssec
