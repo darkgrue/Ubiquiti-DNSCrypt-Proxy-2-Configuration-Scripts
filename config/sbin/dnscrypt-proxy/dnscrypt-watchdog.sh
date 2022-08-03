@@ -18,7 +18,7 @@ while true; do
         if [ $? -ne 0 ]
         then
             fail_count=$((fail_count + 1))
-            /usr/bin/logger -p user.notice DNS check to www.quad9.net FAIL, count: $fail_count
+            /usr/bin/logger -p user.notice DNS check to one.one.one.one FAIL, count: $fail_count
 
             if [ $fail_count -ge ${RESET_WHEN_FAIL_COUNT} ]
 	        then
