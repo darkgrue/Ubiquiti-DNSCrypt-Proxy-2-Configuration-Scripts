@@ -14,7 +14,7 @@ while true; do
     if pgrep -F /var/run/dnscrypt-proxy.pid > /dev/null
     then
 #        /usr/bin/logger -p user.notice dnscrypt-watchdog: dnscrypt-proxy process is OK, checking resolver...
-        host 9.9.9.9 > /dev/null
+        host 1.1.1.1 > /dev/null
         if [ $? -ne 0 ]
         then
             fail_count=$((fail_count + 1))

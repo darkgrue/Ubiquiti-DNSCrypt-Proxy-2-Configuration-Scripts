@@ -24,14 +24,14 @@ Follow the instructions for the EdgeRouter or UniFi configuration, below.
 
 You can verify this by checking the compile options for dnsmasq on the USG:
 
-```
+```sh
 /usr/sbin/dnsmasq -v | grep -Eo no-DNSSEC
 no-DNSSEC
 ```
 
 If the `no-DNSSEC` option is present, you need to remove the following commands from the `config.gateway.json` file on the CloudKey and reprovision:
 
-```
+```sh
 proxy-dnssec
 trust-anchor=.,20326,8,2,E06D44B80B8F1D39A95C0B0D7C65D08458E880409BBC683457104237C7F8EC8D
 dnssec
@@ -43,7 +43,7 @@ dnssec-no-timecheck
 
 After the files are placed in the `/config` filesystem, perform the router configuration, including the dnsmasq configuration (note the delete command that's discussed in this thread to make sure there isn't a `server=127.0.0.1` line in `/etc/dnsmasq.conf` that overrides pointing to the dnscrypt-proxy server we have running on an unprivledged port):
 
-```
+```sh
 configure
 delete service dns forwarding system
 set service dns forwarding cache-size 0
@@ -61,20 +61,20 @@ set service dns forwarding options no-resolv
 ```
 
 Choose one of the following configuration options (`dnssec-timestamp` **or** `dnssec-no-timecheck`):
- 
-```
+
+```sh
 set service dns forwarding options dnssec-timestamp=/config/var/run/dnsmasq/dnsmasq.time
 ```
 
 **OR** if you are using the `/config/scripts/post-config.d/dnt-hup.sh` script (recommended)
 
-```
+```sh
 set service dns forwarding options dnssec-no-timecheck
 ```
 
 Commit changes to the running config and save the running config to `config.boot`:
 
-```
+```sh
 commit
 save
 ```
@@ -94,8 +94,8 @@ Once the `config.gateway.json` file is on the CloudKey in the correct directory,
 # Finishing Up
 
 Checking on the EdgeRouter/USG, you should see the `dnscrypt-proxy` process running when you perform a listing of running processes with the `ps -ef` command, and you should see diagnostic messages from the scripts and the `dnscrypt-proxy` process itself in the `/var/log/messages` log file (sample output from a USG is shown below):
- 
-```
+
+```sh
 Aug  3 02:41:00 USG dnscrypt-proxy[3514]: Source [public-resolvers.md] loaded
 Aug  3 02:41:00 USG dnscrypt-proxy[3514]: dnscrypt-proxy 2.0.16
 Aug  3 02:41:00 USG dnscrypt-proxy[3514]: Failed to install DNSCrypt client prox
