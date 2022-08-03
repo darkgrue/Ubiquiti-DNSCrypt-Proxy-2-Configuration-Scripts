@@ -1,4 +1,1 @@
-Get the binary that matches the architecture of your Ubiquiti device (e.g. the
-USG is `linux_mips64` and the ER-X is `linux_mipsle`) from the
-[dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases)
-and extract to this directory.
+Get the binary that matches the architecture of your Ubiquiti device (e.g. the USG is `linux_mips64` and the ER-X is `linux_mipsle`) from the [dnscrypt-proxy releases directory](https://github.com/jedisct1/dnscrypt-proxy/releases) and extract to this directory.
